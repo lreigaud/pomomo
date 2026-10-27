@@ -194,7 +194,7 @@ export function FocusProvider({ children }: { children: ReactNode }) {
         if (!mounted) return;
         // Keep navigation and writes blocked until a successful read. Retrying
         // never clears storage or replaces existing history with empty defaults.
-        setStorageError('Focus Garden could not load your saved data. It has not been changed. Tap Try again to retry.');
+        setStorageError('pomomo could not load your saved data. It has not been changed. Tap Try again to retry.');
       });
     return () => {
       mounted = false;
@@ -207,7 +207,7 @@ export function FocusProvider({ children }: { children: ReactNode }) {
     writeQueue.current = writeQueue.current
       .then(() => AsyncStorage.setItem(STORAGE_KEY, snapshot))
       .catch(() => {
-        setStorageError('Focus Garden could not save changes to this device.');
+        setStorageError('pomomo could not save changes to this device.');
       });
   }, [data, isReady, storageError]);
 

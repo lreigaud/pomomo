@@ -206,7 +206,7 @@ export async function testPhoneAlert(enabled: boolean): Promise<void> {
   await Notifications.scheduleNotificationAsync({
     identifier: 'focus-garden-alert-test',
     content: {
-      title: 'Focus Garden alert test',
+      title: 'pomomo alert test',
       body: 'This is the sound and vibration for focus and break completion.',
       sound: 'default',
       vibrate: VIBRATION,

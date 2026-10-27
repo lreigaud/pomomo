@@ -1,5 +1,5 @@
 // SDK 57's top-level expo-notifications entry loads remote push registration,
-// which throws in Android Expo Go. Focus Garden only needs local notifications.
+// which throws in Android Expo Go. pomomo only needs local notifications.
 // Keep these imports isolated here so SDK upgrades can verify the entry points.
 export { getAllScheduledNotificationsAsync } from 'expo-notifications/build/getAllScheduledNotificationsAsync';
 export { setNotificationHandler } from 'expo-notifications/build/NotificationsHandler';

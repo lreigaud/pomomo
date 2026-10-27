@@ -15,8 +15,8 @@ export function StartupScreen({ message, error, onRetry }: StartupScreenProps) {
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: colors.background }, Platform.OS === 'web' && styles.webInsets]} testID="startup-screen">
       <View style={styles.content}>
-        <Text style={[styles.title, { color: colors.foreground }]}>Focus Garden</Text>
-        {!error ? <ActivityIndicator size="large" color={colors.primary} accessibilityLabel="Loading Focus Garden" /> : null}
+        <Text style={[styles.title, { color: colors.foreground }]}>pomomo</Text>
+        {!error ? <ActivityIndicator size="large" color={colors.primary} accessibilityLabel="Loading pomomo" /> : null}
         <Text accessibilityRole={error ? 'alert' : 'text'} accessibilityLiveRegion="polite" style={[styles.message, { color: colors.mutedForeground }]}>
           {error ?? message}
         </Text>

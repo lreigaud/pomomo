@@ -1,6 +1,6 @@
 kind = "mobile"
 previewPath = "/pomodoro-planner/"
-title = "Focus Garden"
+title = "pomomo"
 description = "An Android-first Pomodoro app for planning tasks, choosing how many focus sessions they need, setting daily or weekly repeats, and reviewing focus history by week or month. Task and session data stay on the device."
 version = "1.0.0"
 id = "artifacts/pomodoro-planner"

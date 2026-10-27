@@ -1,4 +1,4 @@
-name: Publish Focus Garden website
+name: Publish pomomo website
 
 on:
   push:

@@ -1,4 +1,4 @@
-# Use Focus Garden as a GitHub Pages website
+# Use pomomo as a GitHub Pages website
 
 The Android app and website use the same source code. No Android Studio, Java,
 Expo Go, backend server, or API keys are needed to use the published website.
@@ -12,7 +12,7 @@ Expo Go, backend server, or API keys are needed to use the published website.
 2. In GitHub, open your repository's **Settings → Pages**.
 3. Under **Build and deployment → Source**, select **GitHub Actions**.
 4. Push to `main` or `master`. If the upload happened before enabling Pages,
-   open **Actions → Publish Focus Garden website → Run workflow**.
+   open **Actions → Publish pomomo website → Run workflow**.
 5. Once the workflow succeeds, open the website link under **Settings → Pages**.
 
 For a normal project repository, the link is typically

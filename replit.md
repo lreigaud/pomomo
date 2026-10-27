@@ -1,4 +1,4 @@
-# Focus Garden
+# pomomo
 
 A local-first Pomodoro planner with task session goals, weekday recurrence, and browsable focus history.
 

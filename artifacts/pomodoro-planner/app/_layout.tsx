@@ -73,7 +73,7 @@ export default function RootLayout() {
   }, []);
   const dismissSplash = useCallback(async () => {
     const hidden = await hideSplashSafely(SplashScreen);
-    if (mounted.current) setSplashError(hidden ? null : 'The startup screen could not close. Try again, or reopen Focus Garden in Expo Go.');
+    if (mounted.current) setSplashError(hidden ? null : 'The startup screen could not close. Try again, or reopen pomomo in Expo Go.');
   }, []);
 
   useEffect(() => {

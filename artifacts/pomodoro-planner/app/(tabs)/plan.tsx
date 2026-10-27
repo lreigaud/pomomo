@@ -206,7 +206,7 @@ export default function PlanScreen() {
   }
 
   function openSettings() {
-    Linking.openSettings().catch(() => setRetryError('Could not open settings. Open them from your phone and allow notifications for Focus Garden.'));
+    Linking.openSettings().catch(() => setRetryError('Could not open settings. Open them from your phone and allow notifications for pomomo.'));
   }
 
   const heading = (
