@@ -1,0 +1,24 @@
+kind = "mobile"
+previewPath = "/pomodoro-planner/"
+title = "Focus Garden"
+description = "An Android-first Pomodoro app for planning tasks, choosing how many focus sessions they need, setting daily or weekly repeats, and reviewing focus history by week or month. Task and session data stay on the device."
+version = "1.0.0"
+id = "artifacts/pomodoro-planner"
+router = "expo-domain"
+
+[[services]]
+name = "expo"
+ensurePreviewReachable = "/status"
+paths = [ "/pomodoro-planner/" ]
+localPort = 24862
+
+[services.development]
+run = "pnpm --filter @workspace/pomodoro-planner run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/pomodoro-planner", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/pomodoro-planner", "run", "serve" ]
+
+[services.env]
+PORT = "24862"
+BASE_PATH = "/pomodoro-planner/"

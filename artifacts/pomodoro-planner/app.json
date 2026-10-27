@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "Focus Garden",
+    "slug": "pomodoro-planner",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "pomodoro-planner",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": false
+    },
+    "android": {
+      "permissions": ["android.permission.VIBRATE", "android.permission.SCHEDULE_EXACT_ALARM"]
+    },
+    "web": {
+      "favicon": "./assets/images/icon.png"
+    },
+    "plugins": [
+      "expo-router",
+      ["expo-splash-screen", { "backgroundColor": "#F7F7F1" }],
+      "expo-notifications",
+      ["expo-audio", { "microphonePermission": false }]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}
