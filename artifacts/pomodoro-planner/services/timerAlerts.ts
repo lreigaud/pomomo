@@ -172,10 +172,25 @@ export function hasScheduledAlarm(deadline: number): boolean {
   return scheduledDeadline === deadline;
 }
 
+export function prepareForegroundAlarm(): void {
+  if (Platform.OS !== 'web') return;
+  if (!player) player = createAudioPlayer(require('../assets/sounds/timer-chime.wav'));
+
+  player.muted = true;
+  const subscription = player.addListener('playbackStatusUpdate', (status) => {
+    if (!status.playing) return;
+    player?.pause();
+    if (player) player.muted = false;
+    subscription.remove();
+  });
+  player.play();
+}
+
 export async function playForegroundAlarm(): Promise<void> {
-  Vibration.vibrate(VIBRATION);
+  if (Platform.OS !== 'web') Vibration.vibrate(VIBRATION);
   await setAudioModeAsync({ playsInSilentMode: true, shouldPlayInBackground: false });
   if (!player) player = createAudioPlayer(require('../assets/sounds/timer-chime.wav'));
+  player.muted = false;
   await player.seekTo(0);
   player.play();
 }

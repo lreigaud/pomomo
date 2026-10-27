@@ -5,9 +5,10 @@ const { startupHarness } = require('./helpers/startup-harness.cjs');
 const MINUTE = 60000;
 const legacy = { id: 'legacy', title: 'Read', targetSessions: 2, repeatDays: [], archived: false, createdAt: 1 };
 
-function provider(tasks = [legacy]) {
+function provider(tasks = [legacy], platform = 'android') {
   let saved;
   const alarms = [];
+  let preparedAlarms = 0;
   const h = startupHarness({
     '@react-native-async-storage/async-storage': {
       getItem: async () => JSON.stringify({
@@ -18,15 +19,16 @@ function provider(tasks = [legacy]) {
       setItem: async (_key, value) => { saved = JSON.parse(value); },
     },
     'expo-haptics': { impactAsync: async () => {}, ImpactFeedbackStyle: {} },
-    'react-native': { AppState: { currentState: 'active', addEventListener: () => ({ remove() {} }) }, Linking: {}, Platform: { OS: 'android' } },
+    'react-native': { AppState: { currentState: 'active', addEventListener: () => ({ remove() {} }) }, Linking: {}, Platform: { OS: platform } },
     '@/services/timerAlerts': {
       syncTimerNotification: async (...args) => { alarms.push(args); },
       hasScheduledAlarm: () => true,
+      prepareForegroundAlarm: () => { preparedAlarms += 1; },
     },
   });
   const { FocusProvider } = h.load('store/FocusContext.tsx');
   h.mount(() => FocusProvider({ children: null }));
-  return { h, value: () => h.result.props.value, saved: () => saved, alarms };
+  return { h, value: () => h.result.props.value, saved: () => saved, alarms, preparedAlarms: () => preparedAlarms };
 }
 
 test('automatic breaks are exactly one fifth, including fractional minutes; legacy tasks remain 25/5', () => {
@@ -69,6 +71,16 @@ test('custom focus completes with its real minutes, then uses the automatic brea
   assert.equal(s.value().timer.totalMs, 40 * MINUTE);
   assert.equal(s.value().sessions.length, 1);
   assert.equal(s.saved().tasks[0].focusMinutes, 40);
+  s.h.unmount();
+});
+
+test('starting a web timer primes its completion sound from the start action', async () => {
+  const s = provider([legacy], 'web');
+  await s.h.settle();
+  s.value().startTimer();
+  await s.h.settle();
+  assert.equal(s.preparedAlarms(), 1);
+  assert.equal(s.value().timer.isRunning, true);
   s.h.unmount();
 });
 

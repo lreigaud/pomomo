@@ -13,6 +13,7 @@ import React, {
 import { AppState, Linking, Platform } from 'react-native';
 import {
   hasScheduledAlarm,
+  prepareForegroundAlarm,
   playForegroundAlarm,
   requestPhoneAlerts,
   syncTimerNotification,
@@ -442,6 +443,7 @@ export function FocusProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const startTimer = useCallback((taskId?: string) => {
+    if (Platform.OS === 'web' && !data.timer.isRunning) prepareForegroundAlarm();
     setClockNow(Date.now());
     setData((current) => {
       if (current.timer.isRunning) {
@@ -492,7 +494,7 @@ export function FocusProvider({ children }: { children: ReactNode }) {
       };
     });
     void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-  }, []);
+  }, [data.timer.isRunning]);
 
   const pauseTimer = useCallback(() => {
     setClockNow(Date.now());

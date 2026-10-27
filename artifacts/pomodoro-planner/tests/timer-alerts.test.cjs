@@ -35,8 +35,17 @@ function service(platform = 'android', granted = true) {
   const audio = {
     setAudioModeAsync: async () => calls.push(['audio-mode']),
     createAudioPlayer: () => ({
+      muted: false,
+      addListener: (_event, listener) => {
+        audio.listener = listener;
+        return { remove: () => calls.push(['remove-listener']) };
+      },
       seekTo: async (time) => calls.push(['seek', time]),
-      play: () => calls.push(['play']),
+      play: () => {
+        calls.push(['play']);
+        audio.listener?.({ playing: true });
+      },
+      pause: () => calls.push(['pause']),
     }),
   };
   class Clock extends Date { static now() { return now; } }
@@ -152,6 +161,14 @@ test('foreground fallback plays the bundled chime and a vibration pattern', asyn
   assert.ok(s.calls.some(([kind]) => kind === 'vibrate'));
   assert.ok(s.calls.some(([kind]) => kind === 'seek'));
   assert.ok(s.calls.some(([kind]) => kind === 'play'));
+});
+
+test('web alarm prepares the bundled chime silently during the user gesture', () => {
+  const s = service('web');
+  s.api.prepareForegroundAlarm();
+  assert.ok(s.calls.some(([kind]) => kind === 'play'));
+  assert.ok(s.calls.some(([kind]) => kind === 'pause'));
+  assert.ok(s.calls.some(([kind]) => kind === 'remove-listener'));
 });
 
 test('test alert uses a separate ID, leaving the real timer alarm untouched', async () => {
